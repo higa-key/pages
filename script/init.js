@@ -1,6 +1,6 @@
 // register serviceWorker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/pages/pwa/sw.js').then((reg) => {
+  navigator.serviceWorker.register('/pages/sw.js').then((reg) => {
     if(reg.installing) {
     console.log('sw:installing');
   } else if(reg.waiting) {
