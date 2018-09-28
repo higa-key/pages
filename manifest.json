@@ -1,0 +1,13 @@
+{
+  "display": "standalone",
+  "short_name": "動画ダウンロード視聴アプリ",
+  "name": "動画ダウンロード視聴アプリケーション",
+  "icons": [
+    {
+      "src": "launcher-icon-4x.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "videos"
+}
