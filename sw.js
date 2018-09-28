@@ -23,24 +23,30 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   console.log('sw:fetch', event.request.url);
 
+  sendMessage(`リクエストに介入`);
+
   // レスポンスの横取り
   event.respondWith(
     // キャッシュ存在確認
     caches.match(event.request).then(response => {
       let res = response;
+      let m = event.request.url.match(/.*\/pages\/(.*)/);
+      const file_name = m[1];
 
       // キャッシュなし
       if (!response) {
-        // sendMessage(`${event.request.url} : Cache API 未使用`);
+        sendMessage(`${file_name} : Cache Storage あり`);
 
         res = fetch(event.request).then(response => {
+          sendMessage(`${file_name} : ダウンロード`);
           return caches.open(CACHE_NAME).then(cache => {
+            sendMessage(`${file_name} : Cache Storage に格納`);
             cache.put(event.request.url, response.clone());
             return response;
           })
         });
       } else {
-        // sendMessage(`${event.request.url} : Cache API 使用`);
+        sendMessage(`${file_name} : Cache Storage なし`);
       }
 
       return res;
