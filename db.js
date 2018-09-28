@@ -43,10 +43,16 @@ async function setVideoSrc(path) {
 
     blob = mp4Blob;
     dbAdd(mp4Blob);
+    onMessage('DBデータ なし');
   } else {
     blob = dbFetch.blob;
+    onMessage('DBデータ あり');
   }
 
   let mp4URL = URL.createObjectURL(blob);
   document.querySelector('video').src = mp4URL;
+}
+
+function onMessage(message) {
+  $('#messages').append(`<p>${message}</p>`);
 }

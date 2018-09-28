@@ -18,7 +18,6 @@ self.addEventListener('activate', event => {
   );
 
   event.waitUntil(self.clients.claim());
-
 });
 
 self.addEventListener('fetch', event => {
@@ -37,10 +36,18 @@ self.addEventListener('fetch', event => {
             cache.put(event.request.url, response.clone());
             return response;
           })
-        })
+        });
+        sendMessage(`${event.request.url} : キャッシュ なし`);
+      } else {
+        sendMessage(`${event.request.url} : キャッシュ あり`);
       }
 
       return res;
     })
   );
 });
+
+function sendMessage(message) {
+  self.clients.matchAll().then(clients =>
+    clients.forEach(client => client.postMessage({'message': message})));
+}
