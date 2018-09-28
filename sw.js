@@ -31,7 +31,7 @@ self.addEventListener('fetch', event => {
 
       // キャッシュなし
       if (!response) {
-        sendMessage(`${event.request.url} : Cache API 未使用`);
+        // sendMessage(`${event.request.url} : Cache API 未使用`);
 
         res = fetch(event.request).then(response => {
           return caches.open(CACHE_NAME).then(cache => {
@@ -40,7 +40,7 @@ self.addEventListener('fetch', event => {
           })
         });
       } else {
-        sendMessage(`${event.request.url} : Cache API 使用`);
+        // sendMessage(`${event.request.url} : Cache API 使用`);
       }
 
       return res;

@@ -7,6 +7,7 @@ navigator.serviceWorker.getRegistrations().then(registrations => {
 const MP4_PATH = '/pages/sample1.mp4';
 
 function dbConnect() {
+  onMessage('DB 接続');
   const db = new Promise((resolve, reject) => {
     const request = window.indexedDB.open('v1', 1);
     request.onupgradeneeded = event => event.target.result.createObjectStore('videos', {
@@ -19,6 +20,7 @@ function dbConnect() {
 }
 
 async function dbGet(id) {
+  onMessage('DB 動画データ 検索');
   const db = await dbConnect();
   return new Promise((resolve, reject) => {
     const objectStore = db.transaction('videos').objectStore('videos');
@@ -28,6 +30,7 @@ async function dbGet(id) {
 }
 
 async function dbAdd(blob) {
+  onMessage('DB 動画データ 格納');
   const db = await dbConnect();
   db.transaction(['videos'], 'readwrite')
     .objectStore('videos')
@@ -42,18 +45,23 @@ async function setVideoSrc(path) {
   let blob = null;
 
   if (!dbFetch) {
+    onMessage('DB 動画データ なし');
+
+    onMessage('動画データ ダウンロード');
     let mp4Blob = await fetch(path).then(response =>
       response.blob()
     );
 
     blob = mp4Blob;
+
     dbAdd(mp4Blob);
-    onMessage('DBデータ なし');
   } else {
+    onMessage('DB 動画データ あり');
+
     blob = dbFetch.blob;
-    onMessage('DBデータ あり');
   }
 
+  onMessage('動画データ VIDEO要素にセット');
   let mp4URL = URL.createObjectURL(blob);
   document.querySelector('video').src = mp4URL;
 }
