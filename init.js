@@ -1,5 +1,5 @@
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/pages/sw.js', {scope: '.'}).then((reg) => {
+  navigator.serviceWorker.register('/pages/sw.js').then((reg) => {
     console.log(
       reg.installing ? 'init:installing' : '',
       reg.waiting ? 'init:waiting' : '',

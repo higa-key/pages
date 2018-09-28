@@ -1,3 +1,8 @@
+// SW 念の為削除
+navigator.serviceWorker.getRegistrations().then(registrations => {
+  for (let registration of registrations) registration.unregister();
+});
+
 // 動画ファイルパス
 const MP4_PATH = '/pages/sample1.mp4';
 
@@ -37,7 +42,7 @@ async function setVideoSrc(path) {
   let blob = null;
 
   if (!dbFetch) {
-    let mp4Blob = await fetch('/video/sample1.mp4').then(response =>
+    let mp4Blob = await fetch(path).then(response =>
       response.blob()
     );
 
