@@ -31,7 +31,12 @@ self.addEventListener('fetch', event => {
     caches.match(event.request).then(response => {
       let res = response;
       let m = event.request.url.match(/.*\/pages\/(.*)/);
-      const file_name = m[1];
+      // const file_name = m[1];
+
+      console.log(event.request.url, typeof event.request.url);
+      console.log(m);
+
+      const file_name = 'aaa';
 
       // キャッシュなし
       if (!response) {
