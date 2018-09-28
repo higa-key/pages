@@ -34,7 +34,7 @@ self.addEventListener('fetch', event => {
 
       // キャッシュなし
       if (!response) {
-        sendMessage(`${file_name} : Cache Storage あり`);
+        sendMessage(`${file_name} : Cache Storage なし`);
 
         res = fetch(event.request).then(response => {
           sendMessage(`${file_name} : ダウンロード`);
@@ -45,7 +45,7 @@ self.addEventListener('fetch', event => {
           })
         });
       } else {
-        sendMessage(`${file_name} : Cache Storage なし`);
+        sendMessage(`${file_name} : Cache Storage あり`);
       }
 
       return res;
