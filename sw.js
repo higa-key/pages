@@ -31,15 +31,16 @@ self.addEventListener('fetch', event => {
 
       // キャッシュなし
       if (!response) {
+        sendMessage(`${event.request.url} : Cache API 未使用`);
+
         res = fetch(event.request).then(response => {
           return caches.open(CACHE_NAME).then(cache => {
             cache.put(event.request.url, response.clone());
             return response;
           })
         });
-        sendMessage(`${event.request.url} : キャッシュ なし`);
       } else {
-        sendMessage(`${event.request.url} : キャッシュ あり`);
+        sendMessage(`${event.request.url} : Cache API 使用`);
       }
 
       return res;
